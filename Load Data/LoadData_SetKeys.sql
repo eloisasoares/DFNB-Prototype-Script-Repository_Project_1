@@ -249,31 +249,57 @@ INSERT INTO t_region_dim(region_id)
 --KEYS
 
 ALTER TABLE t_account_dim
-ADD FOREIGN KEY( primary_cust_id ) REFERENCES t_customer_dim( cust_id ), 
-    FOREIGN KEY( branch_id ) REFERENCES t_branch_dim( branch_id ), 
-    FOREIGN KEY( product_id ) REFERENCES t_product_dim( product_id );
+ADD CONSTRAINT FK_t_account_dim_t_customer_dim
+FOREIGN KEY( primary_cust_id ) REFERENCES t_customer_dim( cust_id );
+
+ALTER TABLE t_account_dim
+ADD CONSTRAINT FK_t_account_dim_t_branch_dim
+FOREIGN KEY( branch_id ) REFERENCES t_branch_dim( branch_id );
+
+ALTER TABLE t_account_dim
+ADD CONSTRAINT FK_t_account_dim_t_product_dim
+FOREIGN KEY( product_id ) REFERENCES t_product_dim( product_id );
 
 /*******************************************************************************************/
 
 ALTER TABLE t_account_fact
-ADD FOREIGN KEY( acct_id ) REFERENCES t_account_dim( acct_id );
+ADD CONSTRAINT FK_t_account_fact_t_account_dim
+FOREIGN KEY( acct_id ) REFERENCES t_account_dim( acct_id );
 
 /*******************************************************************************************/
 
 ALTER TABLE t_branch_dim
-ADD FOREIGN KEY( address_id ) REFERENCES t_address_dim( address_id ), 
-    FOREIGN KEY( region_id ) REFERENCES t_region_dim( region_id ), 
-    FOREIGN KEY( area_id ) REFERENCES t_area_dim( area_id );
+ADD CONSTRAINT FK_t_branch_dim_t_address_dim
+FOREIGN KEY( address_id ) REFERENCES t_address_dim( address_id );
+
+ALTER TABLE t_branch_dim
+ADD CONSTRAINT FK_t_branch_dim_t_region_dim
+FOREIGN KEY( region_id ) REFERENCES t_region_dim( region_id );
+
+ALTER TABLE t_branch_dim
+ADD CONSTRAINT FK_t_branch_dim_t_area_dim
+FOREIGN KEY( area_id ) REFERENCES t_area_dim( area_id );
 
 /*******************************************************************************************/
 
 ALTER TABLE t_customer_account_dim
-ADD FOREIGN KEY( cust_id ) REFERENCES t_customer_dim( cust_id ), 
-    FOREIGN KEY( acct_id ) REFERENCES t_account_dim( acct_id ), 
-    FOREIGN KEY( cust_role_id ) REFERENCES t_customer_role_dim( cust_role_id );
+ADD CONSTRAINT FK_t_customer_account_dim_t_customer_dim
+FOREIGN KEY( cust_id ) REFERENCES t_customer_dim( cust_id );
+
+ALTER TABLE t_customer_account_dim
+ADD CONSTRAINT FK_t_customer_account_dim_t_account_dim
+FOREIGN KEY( acct_id ) REFERENCES t_account_dim( acct_id );
+
+ALTER TABLE t_customer_account_dim
+ADD CONSTRAINT FK_t_customer_account_dim_t_customer_role_dim
+FOREIGN KEY( cust_role_id ) REFERENCES t_customer_role_dim( cust_role_id );
 
 /*******************************************************************************************/
 
 ALTER TABLE t_customer_dim
-ADD FOREIGN KEY( address_id ) REFERENCES t_address_dim( address_id ), 
-    FOREIGN KEY( primary_branch_id ) REFERENCES t_branch_dim( branch_id );
+ADD CONSTRAINT FK_t_customer_dim_t_address_dim
+FOREIGN KEY( address_id ) REFERENCES t_address_dim( address_id );
+
+ALTER TABLE t_customer_dim
+ADD CONSTRAINT FK_t_customer_dim_t_branch_dim
+FOREIGN KEY( primary_branch_id ) REFERENCES t_branch_dim( branch_id );
