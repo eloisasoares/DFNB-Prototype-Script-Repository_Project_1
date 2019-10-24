@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the table [dbo].[t_account_dim].
+1.1	 10/23/2019  ESOARES   1. Changed the statement that adds the Primary Key to determine its name.
 
 RUNTIME: 
 1 min
@@ -25,15 +26,17 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_account_dim
+USE [DFNB2];
+
+DROP TABLE t_account_dim;
+
 CREATE TABLE t_account_dim ( 
-             acct_id              INT PRIMARY KEY NOT NULL , 
+             acct_id              INT NOT NULL , 
              acct_open_date       DATE NOT NULL , 
              acct_close_date      DATE NOT NULL , 
              acct_open_close_code VARCHAR(1) NOT NULL , 
              loan_amt             DECIMAL(20 , 4) NOT NULL , 
              primary_cust_id      INT NOT NULL , 
              branch_id            INT NOT NULL , 
-             product_id           INT NOT NULL
+             product_id           INT NOT NULL CONSTRAINT PK_t_account_dim PRIMARY KEY CLUSTERED(acct_id ASC)
                            );

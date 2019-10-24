@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the table [dbo].[t_product_dim].
+1.1	 10/23/2019  ESOARES   1. Changed the statement that adds the Primary Key to determine its name.
 
 RUNTIME: 
 1 min
@@ -25,9 +26,11 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_product_dim
+USE [DFNB2];
+
+DROP TABLE t_product_dim;
+
 CREATE TABLE t_product_dim ( 
-             product_id          INT PRIMARY KEY NOT NULL , 
-             product_description VARCHAR(100) NULL
+             product_id          INT NOT NULL , 
+             product_description VARCHAR(100) NULL CONSTRAINT PK_t_product_dim PRIMARY KEY CLUSTERED(product_id ASC)
                            );

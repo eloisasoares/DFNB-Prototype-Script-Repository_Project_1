@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the table [dbo].[t_branch_dim].
+1.1	 10/23/2019  ESOARES   1. Changed the statement that adds the Primary Key to determine its name.
 
 RUNTIME: 
 1 min
@@ -25,13 +26,15 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_branch_dim
+USE [DFNB2];
+
+DROP TABLE t_branch_dim;
+
 CREATE TABLE t_branch_dim ( 
-             branch_id          INT PRIMARY KEY NOT NULL , 
+             branch_id          INT NOT NULL , 
              branch_code        VARCHAR(5) NOT NULL , 
              branch_description VARCHAR(100) NOT NULL , 
              address_id         INT NOT NULL , 
              region_id          INT NOT NULL , 
-             area_id            INT NOT NULL
+             area_id            INT NOT NULL CONSTRAINT PK_t_branch_dim PRIMARY KEY CLUSTERED(branch_id ASC)
                           );

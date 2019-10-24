@@ -25,8 +25,10 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_account_fact
+USE [DFNB2];
+
+DROP TABLE t_account_fact;
+
 CREATE TABLE t_account_fact ( 
              as_of_date  DATE NOT NULL , 
              acct_id     INT NOT NULL , 

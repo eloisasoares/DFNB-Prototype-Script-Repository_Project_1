@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the table [dbo].[t_address_dim].
+1.1	 10/23/2019  ESOARES   1. Changed the statement that adds the Primary Key to determine its name.
 
 RUNTIME: 
 1 min
@@ -25,11 +26,13 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_address_dim
+USE [DFNB2];
+
+DROP TABLE t_address_dim;
+
 CREATE TABLE t_address_dim ( 
-             address_id   INT PRIMARY KEY NOT NULL , 
+             address_id   INT NOT NULL , 
              address_type VARCHAR(1) NOT NULL , 
              latitude     DECIMAL(16 , 12) NOT NULL , 
-             longitude    DECIMAL(16 , 12) NOT NULL
+             longitude    DECIMAL(16 , 12) NOT NULL CONSTRAINT PK_t_address_dim PRIMARY KEY CLUSTERED(address_id ASC)
                            );

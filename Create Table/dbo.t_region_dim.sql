@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the table [dbo].[t_region_dim].
+1.1	 10/23/2019  ESOARES   1. Changed the statement that adds the Primary Key to determine its name.
 
 RUNTIME: 
 1 min
@@ -25,9 +26,12 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-USE [DFNB2]
-DROP TABLE t_region_dim
+
+USE [DFNB2];
+
+DROP TABLE t_region_dim;
+
 CREATE TABLE t_region_dim ( 
-             region_id   INT PRIMARY KEY NOT NULL , 
-             region_name VARCHAR(50) NULL
+             region_id   INT NOT NULL , 
+             region_name VARCHAR(50) NULL CONSTRAINT PK_t_region_dim PRIMARY KEY CLUSTERED(region_id ASC)
                           );
