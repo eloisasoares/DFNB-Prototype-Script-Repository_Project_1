@@ -33,9 +33,8 @@ AS
             bd.[branch_code] AS Branch, 
             bd.[region_id] AS Region, 
             bd.[area_id] AS Area, 
-            COUNT(af.[acct_id]) AS Total_New_Accounts
+            COUNT(ad.[acct_id]) AS Total_New_Accounts
      FROM [dbo].[t_account_dim] AS ad
-          JOIN [dbo].[t_account_fact] AS af ON ad.[acct_id] = af.[acct_id]
           JOIN [dbo].[t_branch_dim] AS bd ON bd.[branch_id] = ad.[branch_id]
           JOIN [dbo].[t_customer_dim] AS cd ON cd.[cust_id] = ad.[primary_cust_id]
      GROUP BY DATEPART(YEAR, ad.[acct_open_date]), 
