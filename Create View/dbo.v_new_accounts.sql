@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the view [dbo].[v_new_accounts].
+1.1	 10/23/2019  ESOARES   1. Removed an unnecessary join.
 
 RUNTIME: 
 1 min
