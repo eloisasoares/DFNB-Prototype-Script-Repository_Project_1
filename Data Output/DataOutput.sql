@@ -43,3 +43,10 @@ USE [DFNB2]
 SELECT *
 FROM [dbo].[v_new_loans]
 ORDER BY 4,1 DESC,3 DESC
+
+/*******************************************************************************************/
+
+USE [DFNB2];
+SELECT *
+FROM [dbo].[v_balance]
+ORDER BY 1, 4, 8 DESC;
