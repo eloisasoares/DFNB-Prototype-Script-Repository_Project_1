@@ -1,5 +1,5 @@
 /********************************************************************************************
-NAME: [dbo].[v_new_accounts]
+NAME: [dbo].[v_balance]
 PURPOSE: Create the view [dbo].[v_balance]
 
 SUPPORT: Eloisa Soares
@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to create the view [dbo].[v_balance].
+1.1	 10/25/2019  ESOARES   1. Changed the decimal places for the money amounts from 4 to 0.
 
 RUNTIME: 
 0 min
@@ -32,14 +33,14 @@ CREATE VIEW v_balance
 AS
      SELECT af.acct_id, 
             ad.acct_open_date AS loan_date, 
-            ad.loan_amt, 
+            CONVERT (DECIMAL(10,0), ad.loan_amt) AS loan_amt,
             af.as_of_date AS balance_date, 
             ROW_NUMBER() OVER(PARTITION BY af.acct_id, 
                                            ad.loan_amt
             ORDER BY af.acct_id, 
                      af.as_of_date, 
                      af.cur_balance DESC) AS period,
-            CASE
+            CONVERT (DECIMAL(10,0), (CASE
                 WHEN LAG(af.cur_balance, 1) OVER(PARTITION BY af.acct_id
                                              ORDER BY af.acct_id, 
                                                       af.as_of_date, 
@@ -49,8 +50,8 @@ AS
                 ORDER BY af.acct_id, 
                          af.as_of_date, 
                          af.cur_balance DESC)
-            END AS previous_balance, 
-            af.cur_balance - CASE
+            END)) AS previous_balance, 
+            CONVERT (DECIMAL(10,0), af.cur_balance - CASE
                                  WHEN LAG(af.cur_balance, 1) OVER(PARTITION BY af.acct_id
                              ORDER BY af.acct_id, 
                                       af.as_of_date, 
@@ -60,8 +61,8 @@ AS
                                  ORDER BY af.acct_id, 
                                           af.as_of_date, 
                                           af.cur_balance DESC)
-                             END AS payment, 
-            af.cur_balance AS current_balance,
+                             END) AS payment, 
+            CONVERT (DECIMAL(10,0), af.cur_balance) AS current_balance,
             CASE
                 WHEN CASE
                          WHEN LAG(af.cur_balance, 1) OVER(PARTITION BY af.acct_id
