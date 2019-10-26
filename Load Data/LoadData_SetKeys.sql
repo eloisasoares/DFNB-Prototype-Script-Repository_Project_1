@@ -10,9 +10,11 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/22/2019  ESOARES   1. Built this script to load the tables in DFNB2 database and set PKs and FKs.
+1.1   10/26/2019  ESOARES   1. Added statements to drop existing constraints before loading the data.
+					   2. Switched "truncate table" for "delete from"
 
 RUNTIME: 
-4 min
+6 min
 
 NOTES: 
 (...)
@@ -24,8 +26,69 @@ of the code the rights of the Free Software Definition. All derivative work can 
 distributed under the same license terms.
 
 ********************************************************************************************/
+USE [DFNB2];
 
-TRUNCATE TABLE t_account_dim
+IF (OBJECT_ID('FK_t_account_dim_t_customer_dim') IS NOT NULL)
+ALTER TABLE t_account_dim
+DROP CONSTRAINT FK_t_account_dim_t_customer_dim;
+
+IF (OBJECT_ID('FK_t_account_dim_t_branch_dim') IS NOT NULL)
+ALTER TABLE t_account_dim
+DROP CONSTRAINT FK_t_account_dim_t_branch_dim;
+
+IF (OBJECT_ID('FK_t_account_dim_t_product_dim') IS NOT NULL)
+ALTER TABLE t_account_dim
+DROP CONSTRAINT FK_t_account_dim_t_product_dim;
+
+/*******************************************************************************************/
+
+IF (OBJECT_ID('FK_t_account_fact_t_account_dim') IS NOT NULL)
+ALTER TABLE t_account_fact
+DROP CONSTRAINT FK_t_account_fact_t_account_dim;
+
+/*******************************************************************************************/
+
+IF (OBJECT_ID('FK_t_branch_dim_t_address_dim') IS NOT NULL)
+ALTER TABLE t_branch_dim
+DROP CONSTRAINT FK_t_branch_dim_t_address_dim;
+
+IF (OBJECT_ID('FK_t_branch_dim_t_region_dim') IS NOT NULL)
+ALTER TABLE t_branch_dim
+DROP CONSTRAINT FK_t_branch_dim_t_region_dim;
+
+IF (OBJECT_ID('FK_t_branch_dim_t_area_dim') IS NOT NULL)
+ALTER TABLE t_branch_dim
+DROP CONSTRAINT FK_t_branch_dim_t_area_dim;
+
+/*******************************************************************************************/
+
+IF (OBJECT_ID('FK_t_customer_account_dim_t_customer_dim') IS NOT NULL)
+ALTER TABLE t_customer_account_dim
+DROP CONSTRAINT FK_t_customer_account_dim_t_customer_dim;
+
+IF (OBJECT_ID('FK_t_customer_account_dim_t_account_dim') IS NOT NULL)
+ALTER TABLE t_customer_account_dim
+DROP CONSTRAINT FK_t_customer_account_dim_t_account_dim;
+
+IF (OBJECT_ID('FK_t_customer_account_dim_t_customer_role_dim') IS NOT NULL)
+ALTER TABLE t_customer_account_dim
+DROP CONSTRAINT FK_t_customer_account_dim_t_customer_role_dim;
+
+/*******************************************************************************************/
+
+IF (OBJECT_ID('FK_t_customer_dim_t_address_dim') IS NOT NULL)
+ALTER TABLE t_customer_dim
+DROP CONSTRAINT FK_t_customer_dim_t_address_dim;
+
+IF (OBJECT_ID('FK_t_customer_dim_t_branch_dim') IS NOT NULL)
+ALTER TABLE t_customer_dim
+DROP CONSTRAINT FK_t_customer_dim_t_branch_dim;
+
+GO
+
+/*******************************************************************************************/
+
+DELETE FROM t_account_dim
 INSERT INTO t_account_dim
 (acct_id, 
  acct_open_date, 
@@ -60,7 +123,7 @@ INSERT INTO t_account_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_account_fact
+DELETE FROM t_account_fact
 INSERT INTO t_account_fact
 (as_of_date, 
  acct_id, 
@@ -78,7 +141,7 @@ INSERT INTO t_account_fact
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_address_dim
+DELETE FROM t_address_dim
 INSERT INTO t_address_dim
 (address_id, 
  address_type, 
@@ -115,7 +178,7 @@ INSERT INTO t_address_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_area_dim
+DELETE FROM t_area_dim
 INSERT INTO t_area_dim(area_id)
        SELECT DISTINCT 
               [acct_area_id]
@@ -124,7 +187,7 @@ INSERT INTO t_area_dim(area_id)
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_branch_dim
+DELETE FROM t_branch_dim
 INSERT INTO t_branch_dim
 (branch_id, 
  branch_code, 
@@ -153,7 +216,7 @@ INSERT INTO t_branch_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_customer_account_dim
+DELETE FROM t_customer_account_dim
 INSERT INTO t_customer_account_dim
 (cust_id, 
  acct_id, 
@@ -172,7 +235,7 @@ INSERT INTO t_customer_account_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE dbo.t_customer_dim
+DELETE FROM dbo.t_customer_dim
 INSERT INTO dbo.t_customer_dim
 (cust_id, 
  cust_last_name, 
@@ -213,7 +276,7 @@ INSERT INTO dbo.t_customer_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_customer_role_dim
+DELETE FROM t_customer_role_dim
 INSERT INTO t_customer_role_dim(cust_role_id)
        SELECT DISTINCT
               ([acct_cust_role_id])
@@ -229,7 +292,7 @@ UPDATE t_customer_role_dim
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_product_dim
+DELETE FROM t_product_dim
 INSERT INTO t_product_dim(product_id)
        SELECT DISTINCT 
               [prod_id]
@@ -238,7 +301,7 @@ INSERT INTO t_product_dim(product_id)
 
 /*******************************************************************************************/
 
-TRUNCATE TABLE t_region_dim
+DELETE FROM t_region_dim
 INSERT INTO t_region_dim(region_id)
        SELECT DISTINCT 
               [acct_region_id]
@@ -246,7 +309,6 @@ INSERT INTO t_region_dim(region_id)
 	  ORDER BY 1;
 
 /*******************************************************************************************/
---KEYS
 
 ALTER TABLE t_account_dim
 ADD CONSTRAINT FK_t_account_dim_t_customer_dim
