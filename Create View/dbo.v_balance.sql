@@ -27,7 +27,7 @@ distributed under the same license terms.
 ********************************************************************************************/
 
 USE DFNB2;
-DROP VIEW dbo.v_balance;
+DROP VIEW IF EXISTS dbo.v_balance;
 GO
 CREATE VIEW v_balance
 AS

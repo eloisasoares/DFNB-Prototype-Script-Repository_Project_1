@@ -26,7 +26,7 @@ distributed under the same license terms.
 
 ********************************************************************************************/
 
-DROP VIEW [dbo].[v_new_accounts];
+DROP VIEW IF EXISTS [dbo].[v_new_accounts];
 GO
 CREATE VIEW v_new_accounts
 AS
