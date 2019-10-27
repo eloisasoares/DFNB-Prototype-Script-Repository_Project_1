@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_branch_dim;
+DROP TABLE IF EXISTS t_branch_dim;
 
 CREATE TABLE t_branch_dim ( 
              branch_id          INT NOT NULL , 

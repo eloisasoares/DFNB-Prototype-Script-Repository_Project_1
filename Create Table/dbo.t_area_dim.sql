@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_area_dim;
+DROP TABLE IF EXISTS t_area_dim;
 
 CREATE TABLE t_area_dim ( 
              area_id   INT NOT NULL , 

@@ -29,7 +29,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_region_dim;
+DROP TABLE IF EXISTS t_region_dim;
 
 CREATE TABLE t_region_dim ( 
              region_id   INT NOT NULL , 

@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_address_dim;
+DROP TABLE IF EXISTS t_address_dim;
 
 CREATE TABLE t_address_dim ( 
              address_id   INT NOT NULL , 

@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_account_dim;
+DROP TABLE IF EXISTS t_account_dim;
 
 CREATE TABLE t_account_dim ( 
              acct_id              INT NOT NULL , 

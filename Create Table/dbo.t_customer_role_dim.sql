@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_customer_role_dim;
+DROP TABLE IF EXISTS t_customer_role_dim;
 
 CREATE TABLE t_customer_role_dim ( 
              cust_role_id          INT NOT NULL , 

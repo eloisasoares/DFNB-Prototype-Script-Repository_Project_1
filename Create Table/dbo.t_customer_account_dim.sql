@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_customer_account_dim;
+DROP TABLE IF EXISTS t_customer_account_dim;
 
 CREATE TABLE t_customer_account_dim ( 
              customer_account_id INT IDENTITY(1 , 1) NOT NULL , 

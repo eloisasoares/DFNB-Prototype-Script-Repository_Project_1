@@ -28,7 +28,7 @@ distributed under the same license terms.
 
 USE [DFNB2];
 
-DROP TABLE t_product_dim;
+DROP TABLE  IF EXISTS t_product_dim;
 
 CREATE TABLE t_product_dim ( 
              product_id          INT NOT NULL , 
