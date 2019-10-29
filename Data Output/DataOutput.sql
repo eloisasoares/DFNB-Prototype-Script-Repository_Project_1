@@ -50,3 +50,16 @@ USE [DFNB2];
 SELECT *
 FROM [dbo].[v_balance]
 ORDER BY 1, 4, 8 DESC;
+
+/*******************************************************************************************/
+
+USE [DFNB2];
+SELECT *
+FROM [dbo].[v_accounts_per_customer_per_year]
+ORDER BY 5,1,2;
+
+/*******************************************************************************************/
+
+USE [DFNB2];
+SELECT *
+FROM [dbo].[v_customers_per_client]
