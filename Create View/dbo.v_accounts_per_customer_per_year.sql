@@ -10,6 +10,7 @@ MODIFICATION LOG:
 Ver   Date        Author    Description
 ----  ----------  -------   -----------------------------------------------------------------
 1.0   10/27/2019  ESOARES   1. Built this script to create the view [dbo].[v_accounts_per_customer_per_year].
+1.1   10/30/2019  ESOARES   1. Added customer names.
 
 RUNTIME: 
 1 min
@@ -31,6 +32,7 @@ CREATE VIEW [v_accounts_per_customer_per_year]
 AS
 select DATEPART(YEAR, cd.[cust_since_date]) AS year
 		,cd.[cust_id]
+		,(cd.cust_first_name + ' ' +cd.cust_last_name) as customer_name
 		,cad.cust_role_id
 		,COUNT(cad.[acct_id]) as accounts
 		,cd.[relationship_id]
@@ -40,5 +42,6 @@ join [dbo].[t_customer_account_dim] as cad on cd.[cust_id] = cad.cust_id
 join [dbo].[t_account_dim] as ad on ad.acct_id = cad.acct_id
 group by DATEPART(YEAR, cd.[cust_since_date])
 ,cd.[cust_id]
+,(cd.cust_first_name + ' ' +cd.cust_last_name)
 ,cad.cust_role_id
 ,cd.[relationship_id];
