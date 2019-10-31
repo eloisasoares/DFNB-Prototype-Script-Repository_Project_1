@@ -56,7 +56,7 @@ ORDER BY 1, 4, 8 DESC;
 USE [DFNB2];
 SELECT *
 FROM [dbo].[v_accounts_per_customer_per_year]
-ORDER BY 5,1,2;
+ORDER BY 6,1,2;
 
 /*******************************************************************************************/
 
